@@ -3,7 +3,6 @@ import requests
 from ipaddress import IPv4Network
 from ipaddress import IPv4Address
 
-
 class ip_russia:
 
     def __init__(self):

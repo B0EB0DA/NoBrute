@@ -21,7 +21,6 @@ print(my in r)
 print()
 print(g in r)
 
-
 # dx = dict()
 #
 #
