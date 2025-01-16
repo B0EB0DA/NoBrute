@@ -6,18 +6,13 @@ from mark import *
 from ipaddress import IPv4Network
 from ipaddress import IPv4Address
 
-
 m = mark()
 
 m.here
 
 my = IPv4Address("213.33.160.66")
-
 g = IPv4Address("8.8.8.8")
-
 r = ip_russia()
-
-
 
 print(r.count())
 print()

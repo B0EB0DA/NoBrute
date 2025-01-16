@@ -1,7 +1,5 @@
 import sys
-
 import requests
-
 from ipaddress import IPv4Network
 from ipaddress import IPv4Address
 
@@ -13,6 +11,11 @@ class ip_russia:
         r = requests.get(ripe_url)
         nets_list_str = r.json()["data"]["resources"]["ipv4"]
 
+        n1 = [IPv4Network(supernet) for supernet in nets_list_str]
+
+        n2 = [str(net) for supernet in n1 if supernet.prefixlen <= 24 for net in supernet.subnets(new_prefix=24)]
+        # print(n2)
+
         # [for net := IPv4Network(supernet) in nets_list_str for net in supernet.]
 
         # list(ip_network('192.0.2.0/24').subnets(new_prefix=26))
@@ -21,7 +24,7 @@ class ip_russia:
         sx = dict()
         maskx = dict()
 
-        for net in nets_list_str:
+        for net in n2:
             spl = net.split('/')
             if len(spl) == 2:
                 self.net_str = spl[0]
@@ -46,10 +49,12 @@ class ip_russia:
 
         self.nets_list = [IPv4Network(addr) for addr in nets_list_str]
         print(sys.getsizeof(self.nets_list))
+        print(sys.getsizeof(n2))
         for k1, v1 in sx.items():
             for k2, v2 in v1.items():
-                print(k1, k2, v2)
+                print(k1, k2, len(v2))
         print(maskx)
+        print(f"sx - {sys.getsizeof(sx)}")
 
 
 
